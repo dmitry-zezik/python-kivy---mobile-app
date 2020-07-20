@@ -1,0 +1,1217 @@
+#:import NavigationLayout kivymd.uix.navigationdrawer.NavigationLayout
+#:import MDNavigationDrawer kivymd.uix.navigationdrawer.MDNavigationDrawer
+#:import FXAAEffect kivy.uix.effectwidget.FXAAEffect
+#:import HorizontalBlurEffect kivy.uix.effectwidget.HorizontalBlurEffect
+#:import VerticalBlurEffect kivy.uix.effectwidget.VerticalBlurEffect
+#:import WipeTransition kivy.uix.screenmanager.WipeTransition
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import Gradient compress_page.Gradient
+
+
+NavigationLayout:
+    nav_drawer: nav_drawer
+    screen_manager: screen_manager
+
+
+    ScreenManager:
+        id: screen_manager
+
+        transition: WipeTransition()
+
+        Screen:
+            name: 'first_start_1_scr'
+            FirstStart_1_scr:
+
+        Screen:
+            name: 'first_start_2_scr'
+            FirstStart_2_scr:
+
+        Screen:
+            name: 'login_screen'
+            LoginScreen:
+
+        Screen:
+            name: 'auto_login_screen'
+            on_enter:
+                auto_login_screen.sendToServer_AuthData()
+            AutoLoginScreen:
+                id: auto_login_screen
+
+        Screen:
+            name: 'sign_up_screen'
+            SignUpScreen:
+
+        Screen:
+            name: 'verify_email_screen'
+            VerifyEmailScreen:
+
+        Screen:
+            name: 'compress_screen'
+            on_enter:
+                compress_screen.animatePosHint()
+            CompressScreen:
+                id: compress_screen
+
+
+        Screen:
+            name: 'settings_screen'
+            SettingsScreen:
+
+
+        Screen:
+            name: 'compression_inPr_screen'
+            CompressionInPrScreen:
+
+
+
+    MDNavigationDrawer:
+        id: nav_drawer
+        swipe_edge_width: 0
+
+        ScrollView:
+
+            MDList:
+                id: nav_drawer_list
+
+                OneLineAvatarListItem:
+                    text: "Compress"
+                    on_release:
+                        screen_manager.transition.direction = 'left'
+                        screen_manager.current = 'compress_screen'
+                        nav_drawer.set_state("toggle")
+                    IconLeftWidget:
+                        icon: "fullscreen-exit"
+                        on_release:
+                            screen_manager.transition.direction = 'left'
+                            screen_manager.current = 'compress_screen'
+                            nav_drawer.set_state("toggle")
+
+
+                OneLineAvatarListItem:
+                    text: "Settings"
+                    on_release:
+                        screen_manager.transition.direction = 'left'
+                        screen_manager.current = 'settings_screen'
+                        nav_drawer.set_state("toggle")
+                    IconLeftWidget:
+                        icon: "settings"
+                        on_release:
+                            screen_manager.transition.direction = 'left'
+                            screen_manager.current = 'settings_screen'
+                            nav_drawer.set_state("toggle")
+
+
+
+
+<FirstStart_1_scr>:
+    screen_1_img: screen_1_img
+
+    Widget:
+        id: first_widget
+        size: root.width, root.height
+        AnchorLayout:
+            size: root.width, root.height
+            anchor_x: 'center'
+            anchor_y: 'center'
+            Image:
+                id: screen_1_img
+                source: 'demo/Screen_1.png'
+                size_hint: None, None
+                width: root.findImageWidth(root.size, screen_1_img.texture_size)
+                height: root.findImageHeight(root.size, screen_1_img.texture_size)
+                mipmap: True
+                allow_stretch: True
+                keep_ratio: False
+        BoxLayout:
+            size_hint: None, None
+            orientation: 'vertical'
+            width: self.parent.width
+            height: self.parent.height
+            Widget:
+            Widget:
+                size_hint: 1, 0.55
+                BoxLayout:
+                    size_hint: None, None
+                    orientation: 'vertical'
+                    width: self.parent.width
+                    height: self.parent.height
+                    MDLabel:
+                        text: "[b][size=68sp]Hello![/size][/b]"
+                        #text: "Hello!"
+                        size_hint: None, None
+                        height: dp(78)
+                        width: self.parent.width
+                        #font_style: 'H1'
+                        halign: 'center'
+                        valign: 'center'
+                        markup: True
+                    MDLabel:
+                        text: "This application helps to compress photo in large quantities. You don't need to select files manually"
+                        size_hint: None, None
+                        height: dp(68)
+                        width: self.parent.width
+                        text_size: self.parent.width - dp(56), dp(68)
+                        halign: 'center'
+                        valign: 'center'
+                        markup: True
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        AnchorLayout:
+                            anchor_x: 'center'
+                            anchor_y: 'center'
+                            MDTextButton:
+                                size_hint: None, None
+                                height: dp(48)
+                                increment_width: dp(128)
+                                text: "Skip"
+                                halign: 'center'
+                                valign: 'center'
+                                font_size: dp(18)
+                                custom_color: 0.27058823529411763, 0.5058823529411764, 0.7215686274509804, 1
+                                on_release:
+                                    #app.root.screen_manager.transition = SlideTransition()
+                                    app.root.screen_manager.current = 'login_screen'
+                        AnchorLayout:
+                            anchor_x: 'center'
+                            anchor_y: 'center'
+                            MDFillRoundFlatButton:
+                                size_hint: None, None
+                                height: dp(48)
+                                increment_width: dp(128)
+                                text: "Next"
+                                halign: 'center'
+                                valign: 'center'
+                                font_size: dp(18)
+                                md_bg_color: 0.9137254901960784, 0.7176470588235294, 0.4196078431372549, 1
+                                on_release: app.root.screen_manager.current = 'first_start_2_scr'
+
+
+
+
+<FirstStart_2_scr>:
+    screen_2_img: screen_2_img
+
+    Widget:
+        id: second_widget
+        size: root.width, root.height
+        AnchorLayout:
+            size: root.width, root.height
+            anchor_x: 'center'
+            anchor_y: 'center'
+            Image:
+                id: screen_2_img
+                source: 'demo/Screen_2.png'
+                size_hint: None, None
+                width: root.findImageWidth(root.size, screen_2_img.texture_size)
+                height: root.findImageHeight(root.size, screen_2_img.texture_size)
+                mipmap: True
+                allow_stretch: True
+                keep_ratio: False
+        BoxLayout:
+            size_hint: None, None
+            orientation: 'vertical'
+            width: self.parent.width
+            height: self.parent.height
+            Widget:
+            Widget:
+                size_hint: 1, 0.55
+                BoxLayout:
+                    size_hint: None, None
+                    orientation: 'vertical'
+                    width: self.parent.width
+                    height: self.parent.height
+                    MDLabel:
+                        text: ""
+                        #text: ""
+                        size_hint: None, None
+                        height: dp(78)
+                        width: self.parent.width
+                        #font_style: 'H1'
+                        halign: 'center'
+                        valign: 'center'
+                        markup: True
+                    MDLabel:
+                        text: "Select folders for compressing photos, or use our default settings."
+                        size_hint: None, None
+                        height: dp(68)
+                        width: self.parent.width
+                        text_size: self.parent.width - dp(56), dp(68)
+                        halign: 'center'
+                        valign: 'center'
+                        markup: True
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        AnchorLayout:
+                            anchor_x: 'center'
+                            anchor_y: 'center'
+                            MDTextButton:
+                                size_hint: None, None
+                                height: dp(48)
+                                increment_width: dp(128)
+                                text: "Skip"
+                                halign: 'center'
+                                valign: 'center'
+                                font_size: dp(18)
+                                custom_color: 0.27058823529411763, 0.5058823529411764, 0.7215686274509804, 1
+                                on_release:
+                                    app.root.screen_manager.transition = SlideTransition()
+                                    root.checkLoginData()
+                        AnchorLayout:
+                            anchor_x: 'center'
+                            anchor_y: 'center'
+                            MDFillRoundFlatButton:
+                                size_hint: None, None
+                                height: dp(48)
+                                increment_width: dp(128)
+                                text: "Next"
+                                halign: 'center'
+                                valign: 'center'
+                                font_size: dp(18)
+                                md_bg_color: 0.9137254901960784, 0.7176470588235294, 0.4196078431372549, 1
+                                on_release:
+                                    app.root.screen_manager.transition = SlideTransition()
+                                    root.checkLoginData()
+
+
+
+
+<LoginScreen>:
+    logo_2_img: logo_2_img
+    email_dztextfield: email_dztextfield
+    password_dztextfield: password_dztextfield
+    validateError_text: validateError_text
+    login_widget: login_widget
+    progress_widget: progress_widget
+    registration_success_icon: registration_success_icon
+
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: root.width, root.height
+
+    Widget:
+        id: progress_widget
+        size: root.width, root.height
+        AnchorLayout:
+            size: root.width, root.height
+            anchor_x: 'center'
+            anchor_y: 'center'
+            MDSpinner:
+                size_hint: None, None
+                size: dp(46), dp(46)
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                active: True if root.activeSpinner == True else False
+                color: 0.9137254901960784, 0.7176470588235294, 0.4196078431372549, 1
+            MDIconButton:
+                id: registration_success_icon
+                icon: "check"
+                size_hint: None, None
+                size: dp(46), dp(46)
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                disabled: True
+                theme_text_color: "Custom"
+                text_color: 0.9137254901960784, 0.7176470588235294, 0.4196078431372549, 1
+                user_font_size: "64sp"
+                opacity: 0
+
+            BoxLayout:
+                size_hint: None, None
+                orientation: 'vertical'
+                size: self.parent.width - dp(56), self.parent.height - dp(56)
+                Widget:
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+                    MDLabel:
+                        size_hint: None, None
+                        text: root.server_statusLabel
+                        height: dp(48)
+                        width: self.parent.width
+                        font_style: 'Body1'
+                        halign: 'center'
+                        valign: 'center'
+
+    Widget:
+        id: login_widget
+        size: root.width, root.height
+        AnchorLayout:
+            size: root.width, root.height
+            anchor_x: 'center'
+            anchor_y: 'center'
+            Image:
+                id: logo_2_img
+                source: 'demo/logo_2_full.png'
+                size_hint: None, None
+                width: root.findImageWidth(root.size, logo_2_img.texture_size)
+                height: root.findImageHeight(root.size, logo_2_img.texture_size)
+                mipmap: True
+                allow_stretch: True
+                keep_ratio: False
+        BoxLayout:
+            size_hint: None, None
+            orientation: 'vertical'
+            width: self.parent.width
+            height: self.parent.height
+            #Widget:
+            AnchorLayout:
+                anchor_x: 'center'
+                anchor_y: 'bottom'
+                MDLabel:
+                    id: validateError_text
+                    size_hint: None, None
+                    height: dp(48)
+                    width: self.parent.width - dp(56)
+                    font_style: 'Body1'
+                    halign: 'center'
+                    valign: 'center'
+            Widget:
+                AnchorLayout:
+                    size: self.parent.width, self.parent.height
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+                    BoxLayout:
+                        size_hint: None, None
+                        orientation: 'vertical'
+                        size: self.parent.width - dp(56), self.parent.height - dp(56)
+                        DZTextField:
+                            id: email_dztextfield
+                            size_hint: None, None
+                            size: self.parent.width, dp(48)
+                            hint_text: "E-Mail"
+                            textType: "E-Mail"
+                            on_validateError: validateError_text.text = self.validateError
+
+                        Widget:
+                            size_hint: None, None
+                            size: self.parent.width, dp(24)
+
+                        DZTextField:
+                            id: password_dztextfield
+                            size_hint: None, None
+                            size: self.parent.width, dp(48)
+                            hint_text: "Password"
+
+                        Widget:
+                            size_hint: None, None
+                            size: self.parent.width, dp(24)
+
+                        MDTextButton:
+                            size_hint: None, None
+                            height: dp(48)
+                            width: self.parent.width
+                            text: "[color=b8b8b8]Don't have an account yet?  [/color]" + "[color=2874aa] Sign up[/color]"
+                            halign: 'center'
+                            valign: 'center'
+                            font_size: dp(18)
+                            markup: True
+                            on_release:
+                                app.root.screen_manager.transition = SlideTransition()
+                                app.root.screen_manager.transition.direction = 'left'
+                                app.root.screen_manager.current = 'sign_up_screen'
+
+                        Widget:
+
+                        MDFillRoundFlatButton:
+                            size_hint: None, None
+                            height: dp(48)
+                            width: self.parent.width
+                            text: "Sign in"
+                            halign: 'center'
+                            valign: 'center'
+                            font_size: dp(18)
+                            md_bg_color: 0.9137254901960784, 0.7176470588235294, 0.4196078431372549, 1
+                            on_release:
+                                root.pressedSignIn()
+
+                        Widget:
+                            size_hint: None, None
+                            size: self.parent.width, dp(24)
+
+                        MDTextButton:
+                            size_hint: None, None
+                            height: dp(48)
+                            width: self.parent.width
+                            text: "[color=2874aa]Forgot password[/color]"
+                            halign: 'center'
+                            valign: 'center'
+                            font_size: dp(18)
+                            markup: True
+                            on_release:
+                                #app.root.screen_manager.transition = SlideTransition()
+                                #app.root.screen_manager.current = 'login_screen'
+
+                        Widget:
+                            size_hint: None, None
+                            size: self.parent.width, dp(24)
+
+
+
+
+<AutoLoginScreen>:
+    progress_widget: progress_widget
+    registration_success_icon: registration_success_icon
+
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: root.width, root.height
+
+    Widget:
+        id: progress_widget
+        size: root.width, root.height
+        AnchorLayout:
+            size: root.width, root.height
+            anchor_x: 'center'
+            anchor_y: 'center'
+            MDSpinner:
+                size_hint: None, None
+                size: dp(46), dp(46)
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                active: True if root.activeSpinner == True else False
+                color: 0.9137254901960784, 0.7176470588235294, 0.4196078431372549, 1
+            MDIconButton:
+                id: registration_success_icon
+                icon: "check"
+                size_hint: None, None
+                size: dp(46), dp(46)
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                disabled: True
+                theme_text_color: "Custom"
+                text_color: 0.9137254901960784, 0.7176470588235294, 0.4196078431372549, 1
+                user_font_size: "64sp"
+                opacity: 0
+
+            BoxLayout:
+                size_hint: None, None
+                orientation: 'vertical'
+                size: self.parent.width - dp(56), self.parent.height - dp(56)
+                Widget:
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+                    MDLabel:
+                        size_hint: None, None
+                        text: root.server_statusLabel
+                        height: dp(48)
+                        width: self.parent.width
+                        font_style: 'Body1'
+                        halign: 'center'
+                        valign: 'center'
+
+
+
+
+<SignUpScreen>:
+    logo_2_img: logo_2_img
+    validateError_text: validateError_text
+    email_dztextfield: email_dztextfield
+    password_dztextfield: password_dztextfield
+    confirm_password_dztextfield: confirm_password_dztextfield
+    sign_up_widget: sign_up_widget
+    progress_widget: progress_widget
+    user_agreement_chbox: user_agreement_chbox
+    registration_success_icon: registration_success_icon
+
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: root.width, root.height
+
+    Widget:
+        id: progress_widget
+        size: root.width, root.height
+        opacity: 0
+        AnchorLayout:
+            size: root.width, root.height
+            anchor_x: 'center'
+            anchor_y: 'center'
+            MDSpinner:
+                size_hint: None, None
+                size: dp(46), dp(46)
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                active: True if root.activeSpinner == True else False
+                color: 0.9137254901960784, 0.7176470588235294, 0.4196078431372549, 1
+            MDIconButton:
+                id: registration_success_icon
+                icon: "check"
+                size_hint: None, None
+                size: dp(46), dp(46)
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                disabled: True
+                theme_text_color: "Custom"
+                text_color: 0.9137254901960784, 0.7176470588235294, 0.4196078431372549, 1
+                user_font_size: "64sp"
+                opacity: 0
+
+            BoxLayout:
+                size_hint: None, None
+                orientation: 'vertical'
+                size: self.parent.width - dp(56), self.parent.height - dp(56)
+                Widget:
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+                    MDLabel:
+                        size_hint: None, None
+                        text: root.server_statusLabel
+                        height: dp(48)
+                        width: self.parent.width
+                        font_style: 'Body1'
+                        halign: 'center'
+                        valign: 'center'
+
+
+    Widget:
+        id: sign_up_widget
+        size: root.width, root.height
+        opacity: 1
+        AnchorLayout:
+            size: root.width, root.height
+            anchor_x: 'center'
+            anchor_y: 'center'
+            Image:
+                id: logo_2_img
+                source: 'demo/logo_2_full.png'
+                size_hint: None, None
+                width: root.findImageWidth(root.size, logo_2_img.texture_size)
+                height: root.findImageHeight(root.size, logo_2_img.texture_size)
+                mipmap: True
+                allow_stretch: True
+                keep_ratio: False
+        BoxLayout:
+            size_hint: None, None
+            orientation: 'vertical'
+            width: self.parent.width
+            height: self.parent.height
+            Widget:
+                size_hint: 1, 0.5
+            Widget:
+                AnchorLayout:
+                    size: self.parent.width, self.parent.height
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+                    BoxLayout:
+                        size_hint: None, None
+                        orientation: 'vertical'
+                        size: self.parent.width - dp(56), self.parent.height - dp(56)
+                        MDLabel:
+                            id: validateError_text
+                            size_hint: None, None
+                            height: dp(48)
+                            width: self.parent.width - dp(56)
+                            font_style: 'Body1'
+                            halign: 'center'
+                            valign: 'center'
+
+                        Widget:
+                            size_hint: None, None
+                            size: self.parent.width, dp(24)
+
+                        DZTextField:
+                            id: email_dztextfield
+                            size_hint: None, None
+                            size: self.parent.width, dp(48)
+                            hint_text: "E-Mail"
+                            textType: "E-Mail"
+                            on_validateError: validateError_text.text = self.validateError
+
+                        Widget:
+                            size_hint: None, None
+                            size: self.parent.width, dp(24)
+
+                        DZTextField:
+                            id: password_dztextfield
+                            size_hint: None, None
+                            size: self.parent.width, dp(48)
+                            hint_text: "Password"
+                            textType: "Password"
+
+                        Widget:
+                            size_hint: None, None
+                            size: self.parent.width, dp(24)
+
+                        DZTextField:
+                            id: confirm_password_dztextfield
+                            size_hint: None, None
+                            size: self.parent.width, dp(48)
+                            hint_text: "Confirm Password"
+                            textType: "Password"
+                            #on_validateError: validateError_text.text = self.validateError
+                            #on_focus: if self.focus == True:
+
+                        Widget:
+                            size_hint: None, None
+                            size: self.parent.width, dp(24)
+
+                        BoxLayout:
+                            size_hint: None, None
+                            size: self.parent.width, dp(48)
+                            orientation: 'horizontal'
+                            MDCheckbox:
+                                id: user_agreement_chbox
+                                size_hint: None, None
+                                size: dp(48), dp(48)
+                                selected_color: 0.9137254901960784, 0.7176470588235294, 0.4196078431372549, 1
+                            MDLabel:
+                                size_hint: None, None
+                                text: "[color=b8b8b8]I have read and agree to the [/color]" + "[color=2874aa]Terms of Service, Privacy Policy[/color]"
+                                height: dp(48)
+                                width: self.parent.width - dp(56)
+                                font_style: 'Body1'
+                                halign: 'center'
+                                valign: 'center'
+                                markup: True
+                        Widget:
+
+                        MDFillRoundFlatButton:
+                            size_hint: None, None
+                            height: dp(48)
+                            width: self.parent.width
+                            text: "Sign up"
+                            halign: 'center'
+                            valign: 'center'
+                            font_size: dp(18)
+                            md_bg_color: 0.9137254901960784, 0.7176470588235294, 0.4196078431372549, 1
+                            disabled: True if user_agreement_chbox.active == False else False
+                            on_release:
+                                root.pressedSignUp()
+
+                        Widget:
+                            size_hint: None, None
+                            size: self.parent.width, dp(24)
+
+                        MDTextButton:
+                            size_hint: None, None
+                            height: dp(48)
+                            width: self.parent.width
+                            text: "[color=2874aa]Sign in[/color]"
+                            halign: 'center'
+                            valign: 'center'
+                            font_size: dp(18)
+                            markup: True
+                            on_release:
+                                app.root.screen_manager.transition = SlideTransition()
+                                app.root.screen_manager.transition.direction = 'right'
+                                app.root.screen_manager.current = 'login_screen'
+
+                        Widget:
+                            size_hint: None, None
+                            size: self.parent.width, dp(24)
+
+
+
+
+<VerifyEmailScreen>:
+
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: root.width, root.height
+
+    Widget:
+        id: sign_up_widget
+        size: root.width, root.height
+        opacity: 1
+        AnchorLayout:
+            size: root.width, root.height
+            anchor_x: 'center'
+            anchor_y: 'center'
+            #Image:
+            #    id: logo_2_img
+            #    source: 'demo/logo_2_full.png'
+            #    size_hint: None, None
+            #    width: root.findImageWidth(root.size, logo_2_img.texture_size)
+            #    height: root.findImageHeight(root.size, logo_2_img.texture_size)
+            #    mipmap: True
+            #    allow_stretch: True
+            #    keep_ratio: False
+        BoxLayout:
+            size_hint: None, None
+            orientation: 'vertical'
+            width: self.parent.width
+            height: self.parent.height
+            Widget:
+                size_hint: 1, 0.5
+            Widget:
+                AnchorLayout:
+                    size: self.parent.width, self.parent.height
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+                    BoxLayout:
+                        size_hint: None, None
+                        orientation: 'vertical'
+                        size: self.parent.width - dp(56), self.parent.height - dp(56)
+                        MDLabel:
+                            size_hint: None, None
+                            height: dp(48)
+                            width: self.parent.width - dp(56)
+                            text: root.validateError_text
+                            font_style: 'Body1'
+                            halign: 'center'
+                            valign: 'center'
+
+                        Widget:
+                            size_hint: None, None
+                            size: self.parent.width, dp(128)
+
+                        DZTextField:
+                            id: email_dztextfield
+                            size_hint: None, None
+                            size: self.parent.width, dp(48)
+                            hint_text: "Confirmation code"
+                            #textType: "E-Mail"
+                            #on_validateError: validateError_text.text = self.validateError
+
+                        Widget:
+
+                        MDFillRoundFlatButton:
+                            size_hint: None, None
+                            height: dp(48)
+                            width: self.parent.width
+                            text: "Confirm email"
+                            halign: 'center'
+                            valign: 'center'
+                            font_size: dp(18)
+                            md_bg_color: 0.9137254901960784, 0.7176470588235294, 0.4196078431372549, 1
+                            on_release:
+                                #if root.pressedSignUp(validateError_text.text) == True: \
+                                #root.sendToServer_RegistrationData()
+                                #app.root.screen_manager.transition = SlideTransition()
+                                #screen_manager.transition.direction = 'left'
+                                #app.root.screen_manager.current = 'sign_in_screen'
+
+                        Widget:
+                            size_hint: None, None
+                            size: self.parent.width, dp(24)
+
+                        MDTextButton:
+                            size_hint: None, None
+                            height: dp(48)
+                            width: self.parent.width
+                            text: "[color=2874aa]Back[/color]"
+                            halign: 'center'
+                            valign: 'center'
+                            font_size: dp(18)
+                            markup: True
+                            on_release:
+                                app.root.screen_manager.transition = SlideTransition()
+                                app.root.screen_manager.transition.direction = 'right'
+                                app.root.screen_manager.current = 'sign_up_screen'
+
+                        Widget:
+                            size_hint: None, None
+                            size: self.parent.width, dp(24)
+
+
+
+
+<CompressScreen>:
+    pers_stngs_right_widget: pers_stngs_right_widget
+    pers_stngs_left_widget: pers_stngs_left_widget
+    pers_stngs_content_widget: pers_stngs_content_widget
+    pers_stngs_content_widget_boxLayout: pers_stngs_content_widget_boxLayout
+    daysValueLabel: daysValueLabel
+    before_compression_circle: before_compression_circle
+    after_compression_circle: after_compression_circle
+    compressButtonWidget: compressButtonWidget
+
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: root.width, root.height
+
+    Widget:
+        size: root.width, root.height
+
+        AnchorLayout:
+            size: root.width, root.height
+            anchor_x: 'left'
+            anchor_y: 'top'
+            MDIconButton:
+                icon: 'menu'
+                on_release: app.root.nav_drawer.set_state("toggle")
+
+        AnchorLayout:
+            size: root.width, root.height
+            anchor_x: 'center'
+            anchor_y: 'top'
+            MDLabel:
+                text: "Compress"
+                size_hint: None, None
+                height: dp(48)
+                width: dp(128)
+                font_style: 'H5'
+                halign: 'center'
+                valign: 'center'
+
+        Widget:
+            id: compress_screen_content
+            size_hint: None, None
+            width: root.width
+            height: root.height - dp(48)
+            BoxLayout:
+                size_hint: None, None
+                orientation: 'vertical'
+                width: self.parent.width
+                height: self.parent.height
+                BoxLayout:
+                    id: c_s_content_topPart
+                    size_hint: 1, 0.8
+                    orientation: 'vertical'
+                    FloatLayout:
+                        size_hint: None, None
+                        width: self.parent.width
+                        height: self.parent.height
+                        DZRectangleGradient:
+                            id: before_compression_circle
+                            size_hint: None, None
+                            size: self.parent.height * 0.5, self.parent.height * 0.5
+                            pos_hint: {'center_x': .25, 'center_y': .5}
+                            corner_0: self.height
+                            corner_1: self.height
+                            corner_2: self.height
+                            corner_3: self.height
+                            colorTop: root.colorTopBefore
+                            colorDown: root.colorDownBefore
+                        DZRectangleGradient:
+                            id: after_compression_circle
+                            size_hint: None, None
+                            size: self.parent.height * 0.25, self.parent.height * 0.25
+                            pos_hint: {'center_x': .75, 'center_y': .5}
+                            corner_0: self.height
+                            corner_1: self.height
+                            corner_2: self.height
+                            corner_3: self.height
+                            colorTop: root.colorTopAfter
+                            colorDown: root.colorDownAfter
+                        BoxLayout:
+                            id: beforeGBLayout
+                            size_hint: None, None
+                            size: self.parent.width * 0.4, self.parent.height * 0.4
+                            pos_hint: {'x': .15, 'center_y': .2}
+                            orientation: 'vertical'
+                            MDLabel:
+                                id: beforeGBValue_text
+                                text: "[size=52sp]" + root.beforeGBValue + "[/size]" + "[size=26sp] GB[/size]"
+                                size_hint: 1, None
+                                height: dp(48)
+                                #width: root.width
+                                halign: 'left'
+                                #valign: 'bottom'
+                                #padding_x: dp(29)
+                                markup: True
+                            MDLabel:
+                                #text: "[size=20sp][color=#000000]Photo[/color][/size]"
+                                text: "Photo"
+                                size_hint: 1, None
+                                height: dp(38)
+                                #width: root.width
+                                halign: 'left'
+                                valign: 'center'
+                                padding_x: dp(10)
+                                markup: True
+                            Widget:
+                                size_hint: 1, None
+                                height: dp(24)
+                            BoxLayout:
+                                orientation: 'horizontal'
+                                DZRectangleGradient:
+                                    size_hint: None, None
+                                    size: dp(18), dp(18)
+                                    corner_0: self.height
+                                    corner_1: self.height
+                                    corner_2: self.height
+                                    corner_3: self.height
+                                    colorTop: root.colorTopBefore
+                                    colorDown: root.colorDownBefore
+                                Widget:
+                                    size_hint: None, None
+                                    size: dp(18), dp(18)
+                                MDLabel:
+                                    text: "[size=16sp][color=#000000]Before[/color][/size]"
+                                    size_hint: 1, None
+                                    height: dp(18)
+                                    #width: root.width
+                                    halign: 'left'
+                                    valign: 'center'
+                                    markup: True
+                            Widget:
+
+                        BoxLayout:
+                            id: afterGBLayout
+                            size_hint: None, None
+                            size: self.parent.width * 0.4, self.parent.height * 0.4
+                            pos_hint: {'x': .65, 'center_y': .2}
+                            orientation: 'vertical'
+                            MDLabel:
+                                id: beforeGBValue_text
+                                text: "[size=52sp]" + root.afterGBValue + "[/size]" + "[size=26sp] GB[/size]"
+                                size_hint: 1, None
+                                height: dp(48)
+                                #width: root.width
+                                halign: 'left'
+                                #valign: 'bottom'
+                                #padding_x: dp(29)
+                                markup: True
+                            MDLabel:
+                                #text: "[size=20sp][color=#000000]Photo[/color][/size]"
+                                text: "Photo"
+                                size_hint: 1, None
+                                height: dp(38)
+                                #width: root.width
+                                halign: 'left'
+                                valign: 'center'
+                                padding_x: dp(10) if int(root.afterGBValue) > 99 else dp(0)
+                                markup: True
+                            Widget:
+                                size_hint: 1, None
+                                height: dp(24)
+                            BoxLayout:
+                                orientation: 'horizontal'
+                                DZRectangleGradient:
+                                    size_hint: None, None
+                                    size: dp(18), dp(18)
+                                    corner_0: self.height
+                                    corner_1: self.height
+                                    corner_2: self.height
+                                    corner_3: self.height
+                                    colorTop: root.colorTopAfter
+                                    colorDown: root.colorDownAfter
+                                Widget:
+                                    size_hint: None, None
+                                    size: dp(18), dp(18)
+                                MDLabel:
+                                    text: "[size=16sp][color=#000000]After[/color][/size]"
+                                    size_hint: 1, None
+                                    height: dp(18)
+                                    #width: root.width
+                                    halign: 'left'
+                                    valign: 'center'
+                                    markup: True
+                            Widget:
+
+                OneLineAvatarIconListItem:
+                    text: "Personalized Settings"
+                    on_release: root.pressedPersonalSettings()
+
+                    IconLeftWidget:
+                        id: pers_stngs_left_widget
+                        icon: "folder-outline"
+                        on_release: root.pressedPersonalSettings()
+                    IconRightWidget:
+                        id: pers_stngs_right_widget
+                        icon: "chevron-down"
+                        on_release: root.pressedPersonalSettings()
+
+                Widget:
+                    id: c_s_content_bottomPart
+                    FloatLayout:
+                        size_hint: None, None
+                        width: self.parent.width
+                        height: self.parent.height
+                        Widget:
+                            id: compressButtonWidget
+                            size_hint: None, None
+                            height: dp(128)
+                            width: root.width
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            AnchorLayout:
+                                size: self.parent.width, self.parent.height
+                                anchor_x: 'center'
+                                anchor_y: 'center'
+                                MDFillRoundFlatButton:
+                                    size_hint: None, None
+                                    height: dp(48)
+                                    increment_width: root.width * 0.7
+                                    text: ""
+                                    halign: 'center'
+                                    valign: 'center'
+                                    font_size: dp(18)
+                                    md_bg_color: 0.9137254901960784, 0.7176470588235294, 0.4196078431372549, 1
+                                    on_release:
+                                        app.root.screen_manager.transition.direction = 'left'
+                                        app.root.screen_manager.current = 'compression_inPr_screen'
+                                        root.pressedCompress()
+                                    Label:
+                                        text: "Compress"
+                                        size_hint: self.parent.width, self.parent.height
+                                        halign: 'left'
+                                        valign: 'center'
+                                        bold: True
+                                        font_size: sp(20)
+                    BoxLayout:
+                        id: pers_stngs_content_widget_boxLayout
+                        size_hint: None, None
+                        orientation: 'vertical'
+                        width: c_s_content_bottomPart.width
+                        height: c_s_content_bottomPart.height + dp(220)
+                        y: -dp(220)
+                        Widget:
+                            id: pers_stngs_content_widget
+                            #text: "1"
+                            size_hint: None, None
+                            width: root.width
+                            height: dp(0)
+                            canvas.before:
+                                Color:
+                                    rgba: .8, .8, .8, 1
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+
+                        MDLabel:
+                            id: daysValueLabel
+                            text: "[color=b8b8b8]Compress photos older than:  [/color]" + "[color=2874aa]" + root.daysNumber + " day(s)[/color]"
+                            size_hint: None, None
+                            height: dp(48)
+                            width: root.width
+                            halign: 'left'
+                            valign: 'center'
+                            padding_x: dp(29)
+                            markup: True
+                        RelativeLayout:
+                            size_hint: None, None
+                            size: root.width, dp(36)
+                            MDSlider:
+                                id: days_slider
+                                size_hint: None, None
+                                size: self.parent.width * 0.97, dp(32)
+                                pos: (self.parent.width - self.width) / 2, 0
+                                min: 0
+                                max: 100
+                                value: root.sliderValue
+                                hint: False
+                                thumb_color_down: 0.27058823529411763, 0.5058823529411764, 0.7215686274509804, 1
+                                on_touch_move: root.sliderValueChanged(days_slider.value)
+                        Widget:
+
+
+
+
+<SettingsScreen>:
+
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: root.width, root.height
+
+    Widget:
+        size: root.width, root.height
+
+        AnchorLayout:
+            size: root.width, root.height
+            anchor_x: 'left'
+            anchor_y: 'top'
+            MDIconButton:
+                icon: 'menu'
+                on_release: app.root.nav_drawer.set_state("toggle")
+
+        AnchorLayout:
+            size: root.width, root.height
+            anchor_x: 'center'
+            anchor_y: 'top'
+            MDLabel:
+                text: "Settings"
+                size_hint: None, None
+                height: dp(48)
+                width: dp(128)
+                font_style: 'H5'
+                halign: 'center'
+                valign: 'center'
+
+
+
+
+<CompressionInPrScreen>:
+    label_compression_progress: label_compression_progress
+
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: root.width, root.height
+
+    Widget:
+        size: root.width, root.height
+        on_kv_post: root.timerStart()
+
+        AnchorLayout:
+            size: root.width, root.height
+            anchor_x: 'left'
+            anchor_y: 'top'
+            MDIconButton:
+                icon: 'close'
+                on_release:
+                    app.root.screen_manager.transition.direction = 'right'
+                    app.root.screen_manager.current = 'compress_screen'
+
+
+        AnchorLayout:
+            size: root.width, root.height
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            BoxLayout:
+                size_hint: None, None
+                orientation: 'vertical'
+                width: root.width
+                height: dp(196)
+                MDLabel:
+                    id: label_compression_progress
+                    text: "0 %"
+                    font_style: 'H2'
+                    halign: 'center'
+                    valign: 'center'
+                MDLabel:
+                    text: "Please don't turn off the phone \nCompression in progress"
+                    font_style: 'Body1'
+                    halign: 'center'
+                    valign: 'center'
+
+
+
+
+<DZTextField>:
+    canvas.after:
+        Color:
+            rgba: root.textBorderColor
+            #rgba: 1, 0, 0, 1
+        Line:
+            width: root.lineWidth
+            rounded_rectangle: (self.x, self.y, self.width, self.height, dp(15), dp(15), dp(15), dp(15), 500)
+
+    size_hint: None, None
+    size: self.width, self.height
+    allow_copy: False
+    multiline: False
+    background_color: 0, 0, 0, 0
+    cursor_color: 0.27058823529411763, 0.5058823529411764, 0.7215686274509804, 1
+    font_size: self.height * 0.4
+    padding: dp(12), dp(12.5), dp(2), 0
+    on_focus:
+        root.focusChanged(self.focus, self.text)
+
+<DZRectangleGradient>:
+
+    canvas:
+        RoundedRectangle:
+            segments: 50
+            size: self.size
+            pos: self.pos
+            radius: [self.corner_0, self.corner_1, self.corner_2, self.corner_3]
+            texture: Gradient.vertical(self.colorDown, self.colorTop)
+            #texture: Gradient.vertical((0.9137254901960784, 0.7176470588235294, 0.4196078431372549, 1), (1, 0.5098039215686274, 0.396078431372549, 1))
+
